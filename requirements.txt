@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-dotenv
+pydantic
+pydantic-settings
+httpx
+openai
+streamlit
+tenacity
