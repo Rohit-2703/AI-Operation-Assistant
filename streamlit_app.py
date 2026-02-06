@@ -362,10 +362,11 @@ def main():
         
         # Task input
         task = st.text_area(
-            "",
+            "Task Input",
             placeholder="Example: Find top ML GitHub repos and check London weather",
             height=110,
-            key="task_input"
+            key="task_input",
+            label_visibility="hidden"
         )
 
         if st.button("Execute Task", use_container_width=True):

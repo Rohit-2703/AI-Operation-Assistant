@@ -48,6 +48,57 @@ User receives: Summary + Details
    - Formats output into user-friendly summary
    - Extracts sources and verifies completeness
 
+## Key Advantages & Advanced Features
+
+This implementation goes beyond the basic requirements with several production-ready features:
+
+### 1. AI-Powered Query Optimization
+- **Intelligent typo correction**: Automatically corrects misspelled city names, cryptocurrency IDs, and country names using LLM
+- **Context-aware**: Understands different contexts (city, crypto, general) for better correction accuracy
+- **User-friendly**: Provides correction notes so users know when their input was corrected
+- **Example**: "Bengalore" → "Bangalore", "btc" → "bitcoin"
+
+### 2. Resilient API Calls with Retry Logic
+- **Automatic retries**: Uses exponential backoff (1s → 2s → 4s) for transient failures
+- **Smart error handling**: Retries on network errors, 5xx server errors, and rate limits (429)
+- **No unnecessary retries**: Doesn't retry on 4xx client errors (invalid requests)
+- **Production-ready**: Handles API failures gracefully without crashing
+
+### 3. Parallel Execution for Performance
+- **3-4x faster**: Independent tool calls run concurrently using `asyncio.gather()`
+- **Smart dependency detection**: Automatically detects when steps depend on previous results
+- **Optimal resource usage**: Maximizes throughput while maintaining correctness
+- **Example**: Weather + GitHub + News calls happen simultaneously instead of sequentially
+
+### 4. Comprehensive Error Handling
+- **Graceful degradation**: System continues even if some tools fail
+- **Detailed error messages**: Provides helpful, context-aware error explanations
+- **Verification notes**: Clearly indicates what succeeded and what failed
+- **User guidance**: Suggests corrections and alternatives when queries fail
+
+### 5. Structured LLM Outputs
+- **Type-safe**: Uses Pydantic models for validation
+- **Consistent**: Structured JSON responses from LLM with schema validation
+- **Reliable**: Handles JSON parsing errors gracefully with fallbacks
+
+### 6. Production-Ready Architecture
+- **Separation of concerns**: Clear agent responsibilities (Planner, Executor, Verifier)
+- **Modular design**: Easy to add new tools or agents
+- **Comprehensive logging**: Detailed logs for debugging and monitoring
+- **API-first**: RESTful API with OpenAPI documentation
+
+### 7. Beautiful User Interface
+- **Professional design**: Dark theme with modern UI/UX
+- **Real-time feedback**: Progress indicators and status updates
+- **Rich results display**: Expandable sections, formatted summaries, source links
+- **Task history**: Quick access to recent tasks
+
+### 8. Developer Experience
+- **Clear code structure**: Well-organized, readable codebase
+- **Type hints**: Full type annotations for better IDE support
+- **Documentation**: Comprehensive docstrings and comments
+- **Easy to extend**: Simple pattern for adding new tools
+
 ## Quick Start
 
 ### Prerequisites
@@ -58,9 +109,10 @@ User receives: Summary + Details
 ### 1. Clone & Install
 
 ```bash
+Create a folder having any name
 # Clone the repository
-git clone <your-repo-url>
-cd ai_ops_assistant
+git clone https://github.com/Rohit-2703/AI-Operation-Assistant.git
+cd .\AI-Operation-Assistant\
 
 # Create virtual environment
 python -m venv venv
@@ -96,11 +148,12 @@ The API will be available at:
 - **API**: http://localhost:8000
 - **Docs**: http://localhost:8000/docs
 
-### 4. Run the Streamlit UI (Optional)
+### 4. Run the Streamlit UI
 
 Open a **new terminal** and run:
 
 ```bash
+cd .\AI-Operation-Assistant\ (make sure you are in the root)
 streamlit run streamlit_app.py
 ```
 
@@ -300,7 +353,7 @@ ai_ops_assistant/
 - `NEWS_API_KEY`: News API key (required)
 
 **Optional:**
-- `OPENAI_MODEL`: OpenAI model name (default: "gpt-4.1")
+- `OPENAI_MODEL`: OpenAI model name (default: "gpt-4o-mini")
 
 ### Performance Tuning
 
@@ -323,16 +376,11 @@ The system automatically executes independent tool calls in parallel for 3-4x fa
 
 Potential enhancements:
 
-- [ ] **Parallel Execution**: Implemented - Independent steps run concurrently
+- [ ] **Parallel Execution**: Implemented - **Independent steps run concurrently**
 - [ ] **Result Caching**: Cache API responses to reduce costs
-- [ ] **Cost Tracking**: Track LLM and API costs per request
-- [ ] **User Authentication**: Add JWT-based auth
 - [ ] **Result Storage**: Store execution history in database
-- [ ] **Webhook Notifications**: Notify users when tasks complete
 - [ ] **More Tools**: Add Slack, Email, Google Sheets, etc.
 - [ ] **Streaming Responses**: Stream results as they're generated
-- [ ] **Task Scheduling**: Schedule recurring tasks
-- [ ] **Multi-user Support**: User accounts and task isolation
 
 ## Troubleshooting
 
