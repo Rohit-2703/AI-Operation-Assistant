@@ -129,6 +129,7 @@ Create a `.env` file in the project root:
 ```bash
 
 OPENAI_API_KEY=sk-...  # Get from: https://platform.openai.com/
+# IMPORTANT: The OpenAI API key must be from a paid account, otherwise you will get 429 errors with quota exceeded messages
 OPENAI_MODEL=gpt-4o-mini
 # OpenWeatherMap API Key (REQUIRED)
 OPENWEATHERMAP_API_KEY=your_key  # Get from: https://openweathermap.org/api
@@ -386,6 +387,9 @@ Potential enhancements:
 
 ### Issue: "OPENAI_API_KEY environment variable is required"
 **Solution**: Make sure you've created `.env` file in the project root and added your OpenAI API key.
+
+### Issue: 429 Error - "You exceeded your current quota"
+**Solution**: The OpenAI API key must be from a paid account. Free tier accounts will receive 429 errors with quota exceeded messages. Please upgrade to a paid OpenAI account to use this application.
 
 ### Issue: "Backend API not running" in Streamlit
 **Solution**: Make sure FastAPI is running (`uvicorn main:app --reload`) before starting Streamlit.
